@@ -7,6 +7,7 @@ let isActive = 0;
 let isStorage = false;
 let todoList = [];
 let isEdit = false;
+let ENTER_KEY_CODE = 13;
 
 function first_setting() {
   document.getElementsByClassName('js-main__header')[0].addEventListener('mousedown', stopClick);
@@ -130,7 +131,7 @@ function showAll() {
 
 function actionForEnter(e) {
   if (isEdit) {
-    if (e.keyCode === 13) {
+    if (e.keyCode === ENTER_KEY_CODE) {
     e.preventDefault();
     addTextAfterEditing();
   }
