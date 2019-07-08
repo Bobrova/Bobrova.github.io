@@ -48,6 +48,7 @@ body {
 
 .checked-items:hover {
   color: #4d4d4d;
+  cursor: pointer;
 }
 
 .main__input-area {
@@ -140,6 +141,7 @@ body {
   padding: 0 20px 0 0;
   width: 35px;
   height: 35px;
+  cursor: pointer;
 }
 
 .list-checkbox + label:before {
@@ -183,21 +185,6 @@ input[type="checkbox"]:checked ~ span {
   text-decoration: line-through;
 }
 
-.button-add {
-  position: absolute;
-  top: 100px;
-  left: 250px;
-  width: 120px;
-  height: 40px;
-  border-radius: 5px;
-  border: 1px solid gray;
-  cursor: pointer;
-  line-height: 40px;
-  color: white;
-  text-transform: uppercase;
-  background-color: #ead7d7;
-}
-
 .btnDel {
   position: absolute;
   right: 10px;
@@ -210,6 +197,7 @@ input[type="checkbox"]:checked ~ span {
 
 .list-item .btnDel:hover {
 	opacity: 1;
+  cursor: pointer;
 }
 
 .btnDel:before, .btnDel:after {
@@ -264,11 +252,11 @@ input[type="checkbox"]:checked ~ span {
 	border-radius: 3px;
 	padding: 2px 6px;
 	margin: 6px;
-  cursor: pointer;
 }
 
 .bookmarks:hover {
   border: 1px solid #ead7d7;
+  cursor: pointer;
 }
 
 .bookmarks-wrapper {
@@ -285,10 +273,10 @@ input[type="checkbox"]:checked ~ span {
 .delete-completed {
   display: none;
   float: right;
-  cursor: pointer;
   padding: 0 10px;
 }
 
 .delete-completed:hover {
   text-decoration: underline;
+  cursor: pointer;
 }
