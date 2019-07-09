@@ -31,7 +31,7 @@ function create_item() {
     let li = document.createElement('li');
     li.setAttribute('data-id', idCounter);
     li.className = "list-item";
-    li.innerHTML =  '<input type="checkbox" id="' + clForCheck + '" class="list-checkbox"> <label for="' + clForCheck + '"></label>' + '<span class="task-list_text">' + text.trim() + '</span> <div class="btnDel"></div>';
+    li.innerHTML = `<input type="checkbox" id="${clForCheck}" class="list-checkbox"> <label for="${clForCheck}"></label><span class="task-list_text">${text.trim()}</span> <div class="btnDel"></div>`;
     listTask.insertBefore(li, listTask.firstChild);
     document.getElementsByClassName('js-input-text')[0].value = '';
     
@@ -70,7 +70,7 @@ function createItemFromStorage(arrayValue) {
     li.setAttribute('data-id', arrayValue[i].id);
     li.className = "list-item";
     let clForCheck = 'cb' + arrayValue[i].id;
-    li.innerHTML =  '<input type="checkbox" id="' + clForCheck + '" class="list-checkbox"> <label for="' + clForCheck + '"></label>' + '<span class="task-list_text">' + arrayValue[i].title + '</span> <div class="btnDel"></div>';
+    li.innerHTML = `<input type="checkbox" id="${clForCheck}" class="list-checkbox"> <label for="${clForCheck}"></label><span class="task-list_text">${arrayValue[i].title}</span> <div class="btnDel"></div>`;
     listTask.insertBefore(li, listTask.firstChild);
 
     activationOfAdditionalFunctions();
@@ -238,7 +238,7 @@ function changeTab() {
 function ShowCounterActiveTask() {
   let counterAll = document.getElementsByClassName('list-item').length;
   let counterCompleted = document.getElementsByClassName('completed').length;
-  document.getElementsByClassName('active-task')[0].innerHTML = (counterAll - counterCompleted) !== 1 ? (counterAll - counterCompleted) + ' items left': (counterAll - counterCompleted) + ' item left';
+  document.getElementsByClassName('active-task')[0].innerHTML = (counterAll - counterCompleted) !== 1 ? `${counterAll - counterCompleted} items left`: `${counterAll - counterCompleted} item left`;
 }
 
 function deleteCompleted() {
