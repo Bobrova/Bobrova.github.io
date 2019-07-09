@@ -3,7 +3,7 @@ window.addEventListener('load', firstSetting);
 let counterTasks = 0;
 const bookMar = document.getElementsByClassName('js-bookmarks');
 const footer = document.getElementsByClassName('js-list-footer');
-let isActive = 0;
+let activeTab = 'all';
 let isStorage = false;
 let todoList = [];
 let isEdit = false;
@@ -97,7 +97,7 @@ function activationOfAdditionalFunctions() {
 
 function showCompleted() {
   let checkElement = document.getElementsByClassName('list-checkbox');
-  isActive = 3;
+  activeTab = 'completed';
   for (let i = 0; i < checkElement.length; i++) {
     if (checkElement[i].checked) {
       checkElement[i].parentNode.style.display = "flex";
@@ -110,7 +110,7 @@ function showCompleted() {
 
 function showActive() {
   let checkElement = document.getElementsByClassName('list-checkbox');
-  isActive = 2;
+  activeTab = 'active';
   for (let i = 0; i< checkElement.length; i++) {
     if (checkElement[i].checked) {
       checkElement[i].parentNode.style.display = 'none';
@@ -123,7 +123,7 @@ function showActive() {
 
 function showAll() {
   let checkElement = document.getElementsByClassName('list-checkbox');
-  isActive = 1;
+  activeTab = 'all';
   for (let i = 0; i< checkElement.length; i++) {
     checkElement[i].parentNode.style.display = 'flex';
   }
@@ -217,13 +217,13 @@ function handleControlCheck() {
 }
 
 function getTabContent() {
-if (isActive === 1) {
+if (activeTab === 'all') {
       showAll();
     }
-    else if (isActive === 2) {
+    else if (activeTab === 'active') {
       showActive();
     }
-    else if (isActive === 3) {
+    else if (activeTab === 'completed') {
       showCompleted();
     }
 }
