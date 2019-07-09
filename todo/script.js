@@ -1,5 +1,5 @@
 let isList = false;
-window.addEventListener('load', first_setting);
+window.addEventListener('load', firstSetting);
 let counterTasks = 0;
 const bookMar = document.getElementsByClassName('js-bookmarks');
 const footer = document.getElementsByClassName('js-list-footer');
@@ -9,10 +9,10 @@ let todoList = [];
 let isEdit = false;
 let ENTER_KEY_CODE = 13;
 
-function first_setting() {
-  document.getElementsByClassName('js-main__header')[0].addEventListener('mousedown', stopClick);
-  window.addEventListener('mousedown', actionForClick);
-  window.addEventListener("keydown", actionForEnter);
+function firstSetting() {
+  document.getElementsByClassName('js-main__header')[0].addEventListener('mousedown', handleStopClick);
+  window.addEventListener('mousedown', handleClick);
+  window.addEventListener("keydown", handleEnterPress);
   for (let i = 0; i < bookMar.length; i++) {
     bookMar[i].addEventListener("click", changeTab);
   }
@@ -22,7 +22,7 @@ function first_setting() {
   if (localStorage['todoApp']) createFromStorage();
 }
 
-function create_item() {
+function createItem() {
   let text = document.getElementsByClassName('js-input-text')[0].value;
   if (!validateText(text)) return;
   	counterTasks += 1;
@@ -36,13 +36,13 @@ function create_item() {
     document.getElementsByClassName('js-input-text')[0].value = '';
     
     activationOfAdditionalFunctions();
-    document.getElementsByClassName('btnDel')[0].addEventListener('click', delItem);
-    document.getElementsByClassName('list-checkbox')[0].addEventListener('click', control_check);
-    document.getElementsByClassName('task-list_text')[0].addEventListener('dblclick', textEditingFunction);
-    ShowCounterActiveTask();
+    document.getElementsByClassName('btnDel')[0].addEventListener('click', handleItemDelete);
+    document.getElementsByClassName('list-checkbox')[0].addEventListener('click', handleControlCheck);
+    document.getElementsByClassName('task-list_text')[0].addEventListener('dblclick', handleEditingText);
+    showCounterActiveTask();
     saveToObject(idCounter,text.trim(),false);
     saveToStorage(todoList);
-    tabContent();
+    getTabContent();
     document.getElementsByClassName('checked-items')[0].classList.remove('active');
 }
 
@@ -74,9 +74,9 @@ function createItemFromStorage(arrayValue) {
     listTask.insertBefore(li, listTask.firstChild);
 
     activationOfAdditionalFunctions();
-    document.getElementsByClassName('btnDel')[0].addEventListener('click', delItem);
-    document.getElementsByClassName('list-checkbox')[0].addEventListener('click', control_check);
-    document.getElementsByClassName('task-list_text')[0].addEventListener('dblclick', textEditingFunction);
+    document.getElementsByClassName('btnDel')[0].addEventListener('click', handleItemDelete);
+    document.getElementsByClassName('list-checkbox')[0].addEventListener('click', handleControlCheck);
+    document.getElementsByClassName('task-list_text')[0].addEventListener('dblclick', handleEditingText);
     if (arrayValue[i].completed) document.getElementsByClassName('list-checkbox')[0].click();
     if (arrayValue[i].completed) counterChecked += 1;
     if (counterChecked === arrayValue.length) {
@@ -84,15 +84,15 @@ function createItemFromStorage(arrayValue) {
     }
   }
   
-  ShowCounterActiveTask();
+  showCounterActiveTask();
 }
 
 function activationOfAdditionalFunctions() {
   footer[0].classList.add('active');
   document.getElementsByClassName('checked-items')[0].style.display = "block";
 
-  document.getElementsByClassName('delete-completed')[0].addEventListener('click', deleteCompleted);
-  document.getElementsByClassName('checked-items')[0].addEventListener('click', selectAll);
+  document.getElementsByClassName('delete-completed')[0].addEventListener('click', handleDeleteCompleted);
+  document.getElementsByClassName('checked-items')[0].addEventListener('click', handleSelectAll);
 }
 
 function showCompleted() {
@@ -129,7 +129,7 @@ function showAll() {
   }
 }
 
-function actionForEnter(e) {
+function handleEnterPress(e) {
   if (isEdit) {
     if (e.keyCode === ENTER_KEY_CODE) {
     e.preventDefault();
@@ -138,24 +138,24 @@ function actionForEnter(e) {
   }
   else if (e.keyCode === 13) {
     e.preventDefault();
-    create_item();
+    createItem();
   }
 }
 
-function actionForClick() {
+function handleClick() {
   if (isEdit) {
     addTextAfterEditing();
   }
   else {
-    create_item();
+    createItem();
   }
 }
 
-function stopClick() {
+function handleStopClick() {
   event.stopPropagation();
 }
 
-function delItem() {
+function handleItemDelete() {
   let idStorageItem = this.parentNode.getAttribute('data-id');
   delFromStorage(idStorageItem);
   listTask.removeChild(this.parentNode);
@@ -165,7 +165,7 @@ function delItem() {
     document.getElementsByClassName('checked-items')[0].style.display = "none";   
     document.getElementsByClassName('checked-items')[0].classList.remove('active');      
   }
-  ShowCounterActiveTask();
+  showCounterActiveTask();
 }
 
 function delFromStorage(key) {
@@ -177,7 +177,7 @@ function delFromStorage(key) {
   saveToStorage(todoList);
 }
 
-function control_check() {
+function handleControlCheck() {
   let counterChecked = 0;
   if (isStorage) {
   this.parentNode.classList.toggle('completed');
@@ -206,17 +206,17 @@ function control_check() {
     }
     saveToStorage(todoList);
   }
-  tabContent();
+  getTabContent();
   if (document.getElementsByClassName('completed').length !== 0) {
     document.getElementsByClassName('delete-completed')[0].style.display = 'block';
   }
   else {
     document.getElementsByClassName('delete-completed')[0].style.display = 'none';
   }
-  ShowCounterActiveTask();
+  showCounterActiveTask();
 }
 
-function tabContent() {
+function getTabContent() {
 if (isActive === 1) {
       showAll();
     }
@@ -235,13 +235,13 @@ function changeTab() {
   this.classList.add('activeBord');
 }
 
-function ShowCounterActiveTask() {
+function showCounterActiveTask() {
   let counterAll = document.getElementsByClassName('list-item').length;
   let counterCompleted = document.getElementsByClassName('completed').length;
   document.getElementsByClassName('active-task')[0].innerHTML = (counterAll - counterCompleted) !== 1 ? `${counterAll - counterCompleted} items left`: `${counterAll - counterCompleted} item left`;
 }
 
-function deleteCompleted() {
+function handleDeleteCompleted() {
   let el = document.getElementsByClassName('completed');
   while (el.length > 0) {
     let idStorageItem = el[0].getAttribute('data-id');
@@ -254,12 +254,12 @@ function deleteCompleted() {
       document.getElementsByClassName('checked-items')[0].style.display = "none";
     }
 
-  ShowCounterActiveTask();
+  showCounterActiveTask();
   document.getElementsByClassName('delete-completed')[0].style.display = 'none';
   document.getElementsByClassName('checked-items')[0].classList.remove('active');
 }
 
-function selectAll() {
+function handleSelectAll() {
   const elList = document.getElementsByClassName('list-checkbox');
   let isAllChecked = true;
   for (let i = 0; i < elList.length; i++) {
@@ -276,7 +276,7 @@ function selectAll() {
   } 
 }
 
-function textEditingFunction () {
+function handleEditingText () {
   isEdit = true;
   let liElement = this.parentNode;
   liElement.classList.add('edit');
@@ -289,7 +289,7 @@ function textEditingFunction () {
   input.className = "text-editing";
   input.value = liElement.getElementsByClassName('task-list_text')[0].innerHTML;
   liElement.appendChild(input);
-  input.addEventListener('mousedown', stopClick);
+  input.addEventListener('mousedown', handleStopClick);
 }
 
 function addTextAfterEditing() {
@@ -299,7 +299,7 @@ function addTextAfterEditing() {
   let liEdit = document.getElementsByClassName('edit')[0];
   let text = input.value;
   if(!validateText(text)) {
-    delItem.bind(input)();
+    handleItemDelete.bind(input)();
     return;
   }
   else {
@@ -309,7 +309,7 @@ function addTextAfterEditing() {
     }
     liEdit.getElementsByClassName('task-list_text')[0].innerHTML = text.trim();
     liEdit.classList.remove('edit');
-    liEdit.removeEventListener('mousedown', stopClick);
+    liEdit.removeEventListener('mousedown', handleStopClick);
     let idStorageItem = liEdit.getAttribute('data-id');
     for (let i = 0; i < todoList.length; i++) {
         if (todoList[i].id == idStorageItem) {
